@@ -1,0 +1,6 @@
+{
+  "name": "REWERA | Sustainable Fashion",
+  "description": "Modern sustainable fashion for Gen Z. Giving forgotten fabrics a second life through upcycled everyday and resort wear.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
