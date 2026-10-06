@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Heart, Plus, Sparkles, Eye } from 'lucide-react';
+import { Heart, Plus, Sparkles, Eye, Check } from 'lucide-react';
 import { Product } from '../types';
 import { useShop } from '../context/ShopContext';
 import { formatIDR } from '../utils/format';
+import { ProductImageWithColor } from './ProductImageWithColor';
 
 interface ProductCardProps {
   product: Product;
@@ -17,15 +18,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     setQuickViewProduct
   } = useShop();
 
+  const [selectedColor, setSelectedColor] = useState<string>(product.colors[0]?.name || 'Natural');
   const [imageError, setImageError] = useState(false);
   const isSaved = wishlist.includes(product.id);
 
+  const activeColorObj = product.colors.find((c) => c.name === selectedColor) || product.colors[0];
+
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // Default to the first size and color
     const defaultSize = product.sizes[0] || 'One Size';
-    const defaultColor = product.colors[0]?.name || 'Natural';
-    addToCart(product, defaultSize, defaultColor, 1);
+    addToCart(product, defaultSize, selectedColor, 1);
   };
 
   const handleQuickView = (e: React.MouseEvent) => {
@@ -38,6 +40,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     toggleWishlist(product.id);
   };
 
+  const handleColorSelect = (e: React.MouseEvent, colorName: string) => {
+    e.stopPropagation();
+    setSelectedColor(colorName);
+  };
+
   return (
     <div
       onClick={() => navigateToProduct(product)}
@@ -46,12 +53,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Product Image Stage */}
       <div className="relative aspect-[3/4] w-full bg-[#F3EFE9] overflow-hidden rounded-sm transition-transform duration-500 ease-out">
         {!imageError ? (
-          <img
+          <ProductImageWithColor
             src={product.image}
-            alt={product.name}
-            onError={() => setImageError(true)}
-            referrerPolicy="no-referrer"
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+            alt={`${product.name} - ${selectedColor}`}
+            colorHex={activeColorObj?.hex}
+            colorName={selectedColor}
+            showColorBadge={false}
+            className="w-full h-full"
+            imgClassName="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
           />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-[#F5EFE6] to-[#ECE5D8] text-[#615A50]">
@@ -61,7 +70,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
         )}
 
-        {/* Subtle Text Tag (Zero-Pill discipline: quiet unboxed text) */}
+        {/* Subtle Text Tag */}
         {product.isBestSeller && (
           <div className="absolute top-3 left-3 bg-[#FAF8F5]/90 backdrop-blur-xs text-[#24211E] text-[11px] uppercase tracking-widest font-medium px-2.5 py-1">
             Bestseller
@@ -105,9 +114,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
       </div>
 
-      {/* Product Metadata (Quiet, elegant typographic hierarchy) */}
+      {/* Product Metadata */}
       <div className="pt-3.5 pb-2 flex flex-col flex-grow">
-        {/* Category & Materials note (Unboxed text with typographic dot) */}
+        {/* Category & Materials note */}
         <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-[#7A746B] font-medium mb-1 truncate">
           <span>{product.category}</span>
           <span aria-hidden="true" className="text-[#B5ACA0]">·</span>
@@ -131,8 +140,37 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           )}
         </div>
 
-        {/* Available Sizes List (Quiet inline dots) */}
-        <div className="mt-2 text-[11px] text-[#8C8477] flex items-center gap-1.5">
+        {/* Color Swatches Selector directly on card */}
+        {product.colors.length > 0 && (
+          <div className="mt-2.5 flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
+              {product.colors.map((c) => {
+                const isSelected = selectedColor === c.name;
+                return (
+                  <button
+                    key={c.name}
+                    onClick={(e) => handleColorSelect(e, c.name)}
+                    onMouseEnter={() => setSelectedColor(c.name)}
+                    title={`Pilih warna ${c.name}`}
+                    aria-label={`Select ${c.name}`}
+                    className={`w-4 h-4 rounded-full border transition-all flex items-center justify-center ${
+                      isSelected
+                        ? 'border-[#24211E] scale-125 ring-1 ring-[#24211E]/40'
+                        : 'border-black/20 hover:scale-110'
+                    }`}
+                    style={{ backgroundColor: c.hex }}
+                  />
+                );
+              })}
+            </div>
+            <span className="text-[10px] text-[#7A746B] truncate max-w-[110px]">
+              {selectedColor}
+            </span>
+          </div>
+        )}
+
+        {/* Available Sizes List */}
+        <div className="mt-1.5 text-[11px] text-[#8C8477] flex items-center gap-1.5">
           <span>Sizes:</span>
           <span className="font-medium text-[#504A41]">{product.sizes.join(' · ')}</span>
         </div>

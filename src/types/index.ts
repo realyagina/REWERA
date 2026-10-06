@@ -1,5 +1,11 @@
 export type ProductCategory = 'All' | 'Tops' | 'Dresses' | 'Bottoms' | 'Resort Wear' | 'Accessories';
 
+export interface ProductColor {
+  name: string;
+  hex: string;
+  image?: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -17,7 +23,7 @@ export interface Product {
   waterSavedLiters: number;
   wasteDivertedKg: number;
   sizes: string[];
-  colors: { name: string; hex: string }[];
+  colors: ProductColor[];
   isFeatured?: boolean;
   isBestSeller?: boolean;
   isNew?: boolean;
@@ -29,6 +35,29 @@ export interface CartItem {
   selectedSize: string;
   selectedColor: string;
   quantity: number;
+}
+
+export interface OrderSnapshot {
+  orderId: string;
+  items: CartItem[];
+  subtotal: number;
+  discountAmount: number;
+  discountPercent: number;
+  promoCode?: string;
+  shippingFee: number;
+  courier: string;
+  courierName: string;
+  grandTotal: number;
+  customerName: string;
+  phone: string;
+  email: string;
+  address: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  paymentMethod: string;
+  paymentMethodName: string;
+  createdAt: string;
 }
 
 export type PageView = 'home' | 'shop' | 'story' | 'sustainability' | 'pdp';

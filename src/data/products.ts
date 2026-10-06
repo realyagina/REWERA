@@ -24,9 +24,9 @@ export const PRODUCTS: Product[] = [
     wasteDivertedKg: 0.65,
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
-      { name: 'Oatmeal Natural', hex: '#E6DFD5' },
-      { name: 'Terracotta Clay', hex: '#B87A64' },
-      { name: 'Olive Bark', hex: '#636551' }
+      { name: 'Oatmeal Natural', hex: '#E6DFD5', image: IMAGES.productLinenDress },
+      { name: 'Terracotta Clay', hex: '#B87A64', image: IMAGES.productLinenDress },
+      { name: 'Olive Bark', hex: '#636551', image: IMAGES.productLinenDress }
     ],
     isFeatured: true,
     isBestSeller: true,
@@ -55,9 +55,9 @@ export const PRODUCTS: Product[] = [
     wasteDivertedKg: 0.42,
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
-      { name: 'Sage Green', hex: '#7A8C74' },
-      { name: 'Sand Khaki', hex: '#D1C7B7' },
-      { name: 'Charcoal Noir', hex: '#2B2927' }
+      { name: 'Sage Green', hex: '#7A8C74', image: IMAGES.productCorsetTop },
+      { name: 'Sand Khaki', hex: '#D1C7B7', image: IMAGES.productCorsetTop },
+      { name: 'Charcoal Noir', hex: '#2B2927', image: IMAGES.productCorsetTop }
     ],
     isFeatured: true,
     isBestSeller: true,
@@ -85,9 +85,9 @@ export const PRODUCTS: Product[] = [
     wasteDivertedKg: 0.58,
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
-      { name: 'Raw Cream', hex: '#F0ECE4' },
-      { name: 'Warm Taupe', hex: '#A89F91' },
-      { name: 'Mocha Earth', hex: '#5E4C41' }
+      { name: 'Raw Cream', hex: '#F0ECE4', image: IMAGES.heroEditorial },
+      { name: 'Warm Taupe', hex: '#A89F91', image: IMAGES.heroEditorial },
+      { name: 'Mocha Earth', hex: '#5E4C41', image: IMAGES.heroEditorial }
     ],
     isFeatured: true,
     isBestSeller: true,
@@ -113,8 +113,8 @@ export const PRODUCTS: Product[] = [
     wasteDivertedKg: 0.38,
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
-      { name: 'Sand Dune', hex: '#DFD8CC' },
-      { name: 'Muted Moss', hex: '#6D7563' }
+      { name: 'Sand Dune', hex: '#DFD8CC', image: IMAGES.fabricsSustainability },
+      { name: 'Muted Moss', hex: '#6D7563', image: IMAGES.fabricsSustainability }
     ],
     isBestSeller: true,
     careInstructions: 'Gentle hand wash. Lay flat to dry away from direct scorching sun.'
@@ -141,9 +141,9 @@ export const PRODUCTS: Product[] = [
     wasteDivertedKg: 0.52,
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
-      { name: 'Earthy Clay', hex: '#A86A55' },
-      { name: 'Pale Sage', hex: '#8F9B88' },
-      { name: 'Cream Silk', hex: '#EDE8E1' }
+      { name: 'Earthy Clay', hex: '#A86A55', image: IMAGES.productLinenDress },
+      { name: 'Pale Sage', hex: '#8F9B88', image: IMAGES.productLinenDress },
+      { name: 'Cream Silk', hex: '#EDE8E1', image: IMAGES.productLinenDress }
     ],
     isFeatured: true,
     careInstructions: 'Natural dyes evolve gracefully. Wash separately in cold water with pH-neutral soap.'
@@ -168,8 +168,8 @@ export const PRODUCTS: Product[] = [
     wasteDivertedKg: 0.85,
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
-      { name: 'Contrast Dual Indigo', hex: '#586E82' },
-      { name: 'Bleached Sand Denim', hex: '#B5C0C9' }
+      { name: 'Contrast Dual Indigo', hex: '#586E82', image: IMAGES.productCorsetTop },
+      { name: 'Bleached Sand Denim', hex: '#B5C0C9', image: IMAGES.productCorsetTop }
     ],
     isBestSeller: false,
     isNew: true,
@@ -196,9 +196,9 @@ export const PRODUCTS: Product[] = [
     wasteDivertedKg: 0.44,
     sizes: ['S', 'M', 'L', 'XL'],
     colors: [
-      { name: 'Warm Bone', hex: '#ECE7DF' },
-      { name: 'Toasted Almond', hex: '#B8A896' },
-      { name: 'Forest Moss', hex: '#4B5543' }
+      { name: 'Warm Bone', hex: '#ECE7DF', image: IMAGES.heroEditorial },
+      { name: 'Toasted Almond', hex: '#B8A896', image: IMAGES.heroEditorial },
+      { name: 'Forest Moss', hex: '#4B5543', image: IMAGES.heroEditorial }
     ],
     isFeatured: true,
     careInstructions: 'Machine wash cold on gentle cycle. Hang dry in shade.'
@@ -223,7 +223,7 @@ export const PRODUCTS: Product[] = [
     wasteDivertedKg: 0.48,
     sizes: ['One Size'],
     colors: [
-      { name: 'Natural Tan & Canvas', hex: '#D8C6A5' }
+      { name: 'Natural Tan & Canvas', hex: '#D8C6A5', image: IMAGES.fabricsSustainability }
     ],
     isBestSeller: true,
     careInstructions: 'Spot clean canvas with damp cloth. Keep palm fiber dry.'
@@ -249,9 +249,9 @@ export const PRODUCTS: Product[] = [
     wasteDivertedKg: 0.35,
     sizes: ['Free Size'],
     colors: [
-      { name: 'Sunken Olive', hex: '#58614E' },
-      { name: 'Pale Shell', hex: '#EDE8E1' },
-      { name: 'Warm Terracotta', hex: '#A86A55' }
+      { name: 'Sunken Olive', hex: '#58614E', image: IMAGES.productLinenDress },
+      { name: 'Pale Shell', hex: '#EDE8E1', image: IMAGES.productLinenDress },
+      { name: 'Warm Terracotta', hex: '#A86A55', image: IMAGES.productLinenDress }
     ],
     careInstructions: 'Hand wash cold. Twist and knot lightly while drying for enhanced crinkle effect.'
   },
@@ -275,7 +275,7 @@ export const PRODUCTS: Product[] = [
     wasteDivertedKg: 0.15,
     sizes: ['One Size'],
     colors: [
-      { name: 'Champagne & Sage Duo', hex: '#E2D8C3' }
+      { name: 'Champagne & Sage Duo', hex: '#E2D8C3', image: IMAGES.fabricsSustainability }
     ],
     isNew: true,
     careInstructions: 'Hand wash cold with gentle silk detergent. Dry flat.'

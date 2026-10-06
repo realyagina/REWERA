@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import { ArrowLeft, Heart, Plus, Minus, ShieldCheck, Droplets, Recycle, Sparkles, Share2, Ruler } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import {
+  ArrowLeft, Heart, Plus, Minus, ShieldCheck, Droplets, Recycle,
+  Sparkles, Share2, Ruler, Check, ArrowRight
+} from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { PRODUCTS } from '../data/products';
 import { formatIDR } from '../utils/format';
 import { ProductCard } from '../components/ProductCard';
+import { ProductImageWithColor } from '../components/ProductImageWithColor';
 
 export const ProductDetailPage: React.FC<{ onOpenSizeGuide: () => void }> = ({ onOpenSizeGuide }) => {
   const {
@@ -12,7 +16,9 @@ export const ProductDetailPage: React.FC<{ onOpenSizeGuide: () => void }> = ({ o
     addToCart,
     wishlist,
     toggleWishlist,
-    showToast
+    showToast,
+    setIsCartOpen,
+    setIsCheckoutOpen
   } = useShop();
 
   const product = selectedProduct || PRODUCTS[0];
@@ -22,10 +28,33 @@ export const ProductDetailPage: React.FC<{ onOpenSizeGuide: () => void }> = ({ o
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState<'details' | 'sustainability' | 'care'>('details');
 
+  // Sync color and size whenever selectedProduct changes
+  useEffect(() => {
+    if (product) {
+      setSelectedSize(product.sizes[0] || 'One Size');
+      setSelectedColor(product.colors[0]?.name || 'Natural');
+      setQuantity(1);
+    }
+  }, [product.id]);
+
+  const activeColorObj = product.colors.find((c) => c.name === selectedColor) || product.colors[0];
+  const displayImage = activeColorObj?.image || product.image;
+
   const isSaved = wishlist.includes(product.id);
+
+  const handleColorChange = (colorName: string) => {
+    setSelectedColor(colorName);
+    showToast(`Varian warna: ${colorName}`);
+  };
 
   const handleAddToCart = () => {
     addToCart(product, selectedSize, selectedColor, quantity);
+  };
+
+  const handleDirectBuy = () => {
+    addToCart(product, selectedSize, selectedColor, quantity);
+    setIsCartOpen(false);
+    setIsCheckoutOpen(true);
   };
 
   const handleShare = () => {
@@ -37,7 +66,7 @@ export const ProductDetailPage: React.FC<{ onOpenSizeGuide: () => void }> = ({ o
       }).catch(() => {});
     } else {
       navigator.clipboard?.writeText(window.location.href);
-      showToast('Product link copied to clipboard!');
+      showToast('Tautan produk berhasil disalin!');
     }
   };
 
@@ -72,15 +101,27 @@ export const ProductDetailPage: React.FC<{ onOpenSizeGuide: () => void }> = ({ o
         {/* Left Column: Large Gallery Stage */}
         <div className="lg:col-span-7 space-y-4">
           <div className="relative aspect-[3/4] bg-[#F3EFE9] overflow-hidden rounded-xs border border-[#2C2926]/8">
-            <img
-              src={product.image}
-              alt={product.name}
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover object-center"
+            <ProductImageWithColor
+              src={displayImage}
+              alt={`${product.name} - ${selectedColor}`}
+              colorHex={activeColorObj?.hex}
+              colorName={selectedColor}
+              showColorBadge={false}
+              className="w-full h-full"
+              imgClassName="object-cover object-center transition-all duration-300"
             />
 
+            {/* Active Color Floating Tag */}
+            <div className="absolute top-4 left-4 bg-[#FAF8F5]/95 backdrop-blur-xs px-3 py-1.5 text-xs text-[#24211E] font-medium flex items-center gap-2 border border-[#2C2926]/10 shadow-xs z-10">
+              <span
+                className="w-3.5 h-3.5 rounded-full border border-black/20"
+                style={{ backgroundColor: activeColorObj?.hex }}
+              />
+              <span>Warna Aktif: <strong>{selectedColor}</strong></span>
+            </div>
+
             {/* Impact Metric Float */}
-            <div className="absolute bottom-4 left-4 bg-[#FAF8F5]/95 backdrop-blur-xs px-3.5 py-2 text-xs border border-[#2C2926]/10 flex items-center gap-3">
+            <div className="absolute bottom-4 left-4 bg-[#FAF8F5]/95 backdrop-blur-xs px-3.5 py-2 text-xs border border-[#2C2926]/10 flex items-center gap-3 z-10">
               <span className="flex items-center gap-1.5 text-[#5D6B57] font-semibold">
                 <Recycle size={14} />
                 {product.wasteDivertedKg}kg waste diverted
@@ -92,6 +133,49 @@ export const ProductDetailPage: React.FC<{ onOpenSizeGuide: () => void }> = ({ o
               </span>
             </div>
           </div>
+
+          {/* Color Thumbnails Stage */}
+          {product.colors.length > 1 && (
+            <div className="space-y-2 pt-1">
+              <div className="flex items-center justify-between text-xs text-[#7A746B]">
+                <span className="uppercase tracking-wider font-medium">
+                  Pilihan Varian Warna ({product.colors.length} warna):
+                </span>
+                <span className="text-[11px] text-[#24211E] font-medium">
+                  Klik foto di bawah untuk ganti warna
+                </span>
+              </div>
+              <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-none">
+                {product.colors.map((c) => {
+                  const isSelected = selectedColor === c.name;
+                  const thumbImg = c.image || product.image;
+                  return (
+                    <button
+                      key={c.name}
+                      onClick={() => handleColorChange(c.name)}
+                      className={`relative w-24 aspect-[3/4] rounded-xs overflow-hidden border-2 transition-all shrink-0 text-left cursor-pointer group ${
+                        isSelected
+                          ? 'border-[#24211E] ring-2 ring-[#24211E]/40 shadow-sm'
+                          : 'border-transparent opacity-75 hover:opacity-100 hover:border-[#2C2926]/30'
+                      }`}
+                    >
+                      <ProductImageWithColor
+                        src={thumbImg}
+                        alt={c.name}
+                        colorHex={c.hex}
+                        className="w-full h-full"
+                      />
+                      <div className="absolute inset-x-0 bottom-0 bg-black/75 text-white text-[10px] py-1.5 px-2 truncate flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full shrink-0 border border-white/40" style={{ backgroundColor: c.hex }} />
+                        <span className="truncate">{c.name}</span>
+                        {isSelected && <Check size={10} className="shrink-0 ml-auto text-[#A4C49E]" />}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Right Column: Contiguous Purchase Module */}
@@ -135,27 +219,41 @@ export const ProductDetailPage: React.FC<{ onOpenSizeGuide: () => void }> = ({ o
             {product.description}
           </p>
 
-          {/* Color Selection */}
+          {/* Color Selection with visible indicators */}
           {product.colors.length > 0 && (
-            <div className="space-y-2 pt-2">
+            <div className="space-y-2.5 pt-2 border-t border-[#2C2926]/8">
               <div className="flex items-center justify-between text-xs text-[#504A41]">
                 <span className="font-medium">
-                  Natural Tone: <strong className="text-[#24211E] font-semibold">{selectedColor}</strong>
+                  Tone Warna: <strong className="text-[#24211E] font-semibold">{selectedColor}</strong>
+                </span>
+                <span className="text-[11px] text-[#7A746B]">
+                  Pilih warna favorit Anda
                 </span>
               </div>
-              <div className="flex items-center gap-2.5">
-                {product.colors.map((c) => (
-                  <button
-                    key={c.name}
-                    onClick={() => setSelectedColor(c.name)}
-                    className={`w-8 h-8 rounded-full border-2 transition-transform ${
-                      selectedColor === c.name ? 'border-[#24211E] scale-110' : 'border-transparent'
-                    }`}
-                    style={{ backgroundColor: c.hex }}
-                    title={c.name}
-                    aria-label={`Select ${c.name}`}
-                  />
-                ))}
+
+              {/* Color Button Chips */}
+              <div className="flex flex-wrap gap-2">
+                {product.colors.map((c) => {
+                  const isSelected = selectedColor === c.name;
+                  return (
+                    <button
+                      key={c.name}
+                      onClick={() => handleColorChange(c.name)}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-xs border text-xs transition-all ${
+                        isSelected
+                          ? 'border-[#24211E] bg-[#24211E] text-white font-medium shadow-xs ring-1 ring-[#24211E]'
+                          : 'border-[#2C2926]/20 bg-white text-[#24211E] hover:border-[#24211E] hover:bg-[#FAF8F5]'
+                      }`}
+                    >
+                      <span
+                        className="w-3.5 h-3.5 rounded-full border border-black/25 shrink-0"
+                        style={{ backgroundColor: c.hex }}
+                      />
+                      <span>{c.name}</span>
+                      {isSelected && <Check size={12} className="ml-0.5" />}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -233,6 +331,15 @@ export const ProductDetailPage: React.FC<{ onOpenSizeGuide: () => void }> = ({ o
                 <Heart size={18} fill={isSaved ? 'currentColor' : 'none'} />
               </button>
             </div>
+
+            {/* Direct Buy / Instant Checkout CTA */}
+            <button
+              onClick={handleDirectBuy}
+              className="w-full bg-[#5D6B57] hover:bg-[#4E5C49] text-white py-3.5 px-6 text-xs uppercase tracking-[0.18em] font-semibold transition-all shadow-sm flex items-center justify-center gap-2"
+            >
+              <span>Beli Sekarang (Langsung ke Pembayaran)</span>
+              <ArrowRight size={15} />
+            </button>
           </div>
 
           {/* Delivery & Sustainability Guarantee Box */}

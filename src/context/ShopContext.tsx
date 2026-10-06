@@ -19,6 +19,14 @@ interface ShopContextType {
   cartTotal: number;
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
+
+  // Global Promo & Discount
+  promoCode: string;
+  discountPercent: number;
+  applyPromoCode: (code: string) => { success: boolean; message: string };
+  removePromoCode: () => void;
+  discountAmount: number;
+  finalTotal: number;
   
   // Wishlist
   wishlist: string[]; // product IDs
@@ -75,6 +83,33 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [activeCategory, setActiveCategory] = useState<ProductCategory>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Global promo state
+  const [promoCode, setPromoCode] = useState<string>('');
+  const [discountPercent, setDiscountPercent] = useState<number>(0);
+
+  const applyPromoCode = (code: string) => {
+    const clean = code.trim().toUpperCase();
+    if (clean === 'REWERA10') {
+      setPromoCode('REWERA10');
+      setDiscountPercent(10);
+      showToast('Kupon diskon 10% berhasil diterapkan!');
+      return { success: true, message: 'Diskon 10% pesanan berkelanjutan berhasil diterapkan!' };
+    } else if (clean === 'BALI20') {
+      setPromoCode('BALI20');
+      setDiscountPercent(20);
+      showToast('Kupon diskon 20% berhasil diterapkan!');
+      return { success: true, message: 'Diskon 20% musim resort berhasil diterapkan!' };
+    } else {
+      return { success: false, message: 'Kode kupon tidak valid. Gunakan "REWERA10" untuk diskon 10%.' };
+    }
+  };
+
+  const removePromoCode = () => {
+    setPromoCode('');
+    setDiscountPercent(0);
+    showToast('Kupon diskon dihapus');
+  };
 
   useEffect(() => {
     try {
@@ -164,6 +199,8 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
   const cartTotal = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+  const discountAmount = Math.round((cartTotal * discountPercent) / 100);
+  const finalTotal = Math.max(0, cartTotal - discountAmount);
 
   return (
     <ShopContext.Provider
@@ -182,6 +219,12 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         cartTotal,
         isCartOpen,
         setIsCartOpen,
+        promoCode,
+        discountPercent,
+        applyPromoCode,
+        removePromoCode,
+        discountAmount,
+        finalTotal,
         wishlist,
         toggleWishlist,
         isInWishlist,

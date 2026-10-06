@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Trash2, Plus, Minus, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { formatIDR } from '../utils/format';
+import { ProductImageWithColor } from './ProductImageWithColor';
 
 export const CartDrawer: React.FC = () => {
   const {
@@ -13,36 +14,29 @@ export const CartDrawer: React.FC = () => {
     cartTotal,
     cartCount,
     setIsCheckoutOpen,
-    navigateToProduct
+    navigateToProduct,
+    promoCode,
+    discountPercent,
+    applyPromoCode,
+    removePromoCode,
+    discountAmount,
+    finalTotal
   } = useShop();
 
-  const [promoCode, setPromoCode] = useState('');
-  const [discountPercent, setDiscountPercent] = useState(0);
-  const [promoError, setPromoError] = useState('');
-  const [promoSuccess, setPromoSuccess] = useState('');
+  const [inputCode, setInputCode] = useState(promoCode);
+  const [promoMessage, setPromoMessage] = useState<{ text: string; isError: boolean } | null>(null);
 
   if (!isCartOpen) return null;
 
   const FREE_SHIPPING_THRESHOLD = 500000;
-  const amountToFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - cartTotal);
-  const progressPercent = Math.min(100, (cartTotal / FREE_SHIPPING_THRESHOLD) * 100);
-
-  const discountAmount = Math.round((cartTotal * discountPercent) / 100);
-  const finalTotal = Math.max(0, cartTotal - discountAmount);
+  const amountToFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - finalTotal);
+  const progressPercent = Math.min(100, (finalTotal / FREE_SHIPPING_THRESHOLD) * 100);
 
   const handleApplyPromo = (e: React.FormEvent) => {
     e.preventDefault();
-    setPromoError('');
-    setPromoSuccess('');
-    if (promoCode.trim().toUpperCase() === 'REWERA10') {
-      setDiscountPercent(10);
-      setPromoSuccess('10% Sustainable First Order discount applied!');
-    } else if (promoCode.trim().toUpperCase() === 'BALI20') {
-      setDiscountPercent(20);
-      setPromoSuccess('20% Resort Season discount applied!');
-    } else {
-      setPromoError('Invalid code. Try "REWERA10" for 10% off.');
-    }
+    if (!inputCode.trim()) return;
+    const res = applyPromoCode(inputCode);
+    setPromoMessage({ text: res.message, isError: !res.success });
   };
 
   const handleCheckout = () => {
@@ -114,78 +108,93 @@ export const CartDrawer: React.FC = () => {
                 </button>
               </div>
             ) : (
-              cart.map((item) => (
-                <div
-                  key={`${item.product.id}-${item.selectedSize}-${item.selectedColor}`}
-                  className="flex gap-4 pb-4 border-b border-[#2C2926]/8 group"
-                >
-                  <img
-                    src={item.product.image}
-                    alt={item.product.name}
-                    className="w-20 h-24 object-cover rounded-xs bg-[#ECE5D8] shrink-0 cursor-pointer"
-                    onClick={() => {
-                      navigateToProduct(item.product);
-                      setIsCartOpen(false);
-                    }}
-                  />
-
-                  <div className="flex-1 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-start justify-between gap-2">
-                        <h4
-                          onClick={() => {
-                            navigateToProduct(item.product);
-                            setIsCartOpen(false);
-                          }}
-                          className="font-serif text-[15px] font-medium text-[#24211E] hover:text-[#5D6B57] transition-colors cursor-pointer leading-snug line-clamp-1"
-                        >
-                          {item.product.name}
-                        </h4>
-                        <button
-                          onClick={() => removeFromCart(item.product.id, item.selectedSize, item.selectedColor)}
-                          className="text-[#968E82] hover:text-[#A96F57] p-1 transition-colors"
-                          aria-label="Remove item"
-                        >
-                          <Trash2 size={15} />
-                        </button>
-                      </div>
-
-                      <div className="text-[11px] text-[#7A746B] mt-1 space-x-2">
-                        <span>Size: <strong className="text-[#24211E] font-medium">{item.selectedSize}</strong></span>
-                        <span aria-hidden="true">·</span>
-                        <span>Tone: <strong className="text-[#24211E] font-medium">{item.selectedColor}</strong></span>
-                      </div>
+              cart.map((item) => {
+                const itemColorObj = item.product.colors.find((c) => c.name === item.selectedColor);
+                return (
+                  <div
+                    key={`${item.product.id}-${item.selectedSize}-${item.selectedColor}`}
+                    className="flex gap-4 pb-4 border-b border-[#2C2926]/8 group"
+                  >
+                    <div
+                      className="w-20 h-24 rounded-xs overflow-hidden shrink-0 cursor-pointer border border-[#2C2926]/10"
+                      onClick={() => {
+                        navigateToProduct(item.product);
+                        setIsCartOpen(false);
+                      }}
+                    >
+                      <ProductImageWithColor
+                        src={item.product.image}
+                        alt={item.product.name}
+                        colorHex={itemColorObj?.hex}
+                        className="w-full h-full"
+                        imgClassName="object-cover"
+                      />
                     </div>
 
-                    <div className="flex items-center justify-between mt-3">
-                      {/* Quantity Stepper */}
-                      <div className="flex items-center border border-[#2C2926]/15 rounded-xs bg-[#F5EFE6]">
-                        <button
-                          onClick={() => updateQuantity(item.product.id, item.selectedSize, item.selectedColor, -1)}
-                          className="p-1 px-2 text-[#504A41] hover:text-[#1E1B18] transition-colors"
-                          aria-label="Decrease quantity"
-                        >
-                          <Minus size={12} />
-                        </button>
-                        <span className="text-xs font-semibold px-2 tabular-nums text-[#24211E]">
-                          {item.quantity}
-                        </span>
-                        <button
-                          onClick={() => updateQuantity(item.product.id, item.selectedSize, item.selectedColor, 1)}
-                          className="p-1 px-2 text-[#504A41] hover:text-[#1E1B18] transition-colors"
-                          aria-label="Increase quantity"
-                        >
-                          <Plus size={12} />
-                        </button>
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-start justify-between gap-2">
+                          <h4
+                            onClick={() => {
+                              navigateToProduct(item.product);
+                              setIsCartOpen(false);
+                            }}
+                            className="font-serif text-[15px] font-medium text-[#24211E] hover:text-[#5D6B57] transition-colors cursor-pointer leading-snug line-clamp-1"
+                          >
+                            {item.product.name}
+                          </h4>
+                          <button
+                            onClick={() => removeFromCart(item.product.id, item.selectedSize, item.selectedColor)}
+                            className="text-[#968E82] hover:text-[#A96F57] p-1 transition-colors"
+                            aria-label="Remove item"
+                          >
+                            <Trash2 size={15} />
+                          </button>
+                        </div>
+
+                        <div className="text-[11px] text-[#7A746B] mt-1 flex items-center gap-2">
+                          <span>Size: <strong className="text-[#24211E] font-medium">{item.selectedSize}</strong></span>
+                          <span aria-hidden="true">·</span>
+                          <span className="flex items-center gap-1">
+                            Tone:
+                            {itemColorObj && (
+                              <span className="w-2.5 h-2.5 rounded-full border border-black/20" style={{ backgroundColor: itemColorObj.hex }} />
+                            )}
+                            <strong className="text-[#24211E] font-medium">{item.selectedColor}</strong>
+                          </span>
+                        </div>
                       </div>
 
-                      <span className="text-xs font-medium text-[#24211E] tabular-nums">
-                        {formatIDR(item.product.price * item.quantity)}
-                      </span>
+                      <div className="flex items-center justify-between mt-3">
+                        {/* Quantity Stepper */}
+                        <div className="flex items-center border border-[#2C2926]/15 rounded-xs bg-[#F5EFE6]">
+                          <button
+                            onClick={() => updateQuantity(item.product.id, item.selectedSize, item.selectedColor, -1)}
+                            className="p-1 px-2 text-[#504A41] hover:text-[#1E1B18] transition-colors"
+                            aria-label="Decrease quantity"
+                          >
+                            <Minus size={12} />
+                          </button>
+                          <span className="text-xs font-semibold px-2 tabular-nums text-[#24211E]">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() => updateQuantity(item.product.id, item.selectedSize, item.selectedColor, 1)}
+                            className="p-1 px-2 text-[#504A41] hover:text-[#1E1B18] transition-colors"
+                            aria-label="Increase quantity"
+                          >
+                            <Plus size={12} />
+                          </button>
+                        </div>
+
+                        <span className="text-xs font-medium text-[#24211E] tabular-nums">
+                          {formatIDR(item.product.price * item.quantity)}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
 
@@ -193,23 +202,45 @@ export const CartDrawer: React.FC = () => {
           {cart.length > 0 && (
             <div className="px-6 py-5 bg-[#F5EFE6] border-t border-[#2C2926]/10 space-y-3">
               {/* Promo Code Input */}
-              <form onSubmit={handleApplyPromo} className="flex gap-2">
-                <input
-                  type="text"
-                  placeholder="Promo code (e.g. REWERA10)"
-                  value={promoCode}
-                  onChange={(e) => setPromoCode(e.target.value)}
-                  className="flex-1 text-xs px-3 py-2 bg-[#FAF8F5] border border-[#2C2926]/15 rounded-xs uppercase tracking-wider text-[#24211E] placeholder-[#9C9487] focus:outline-none focus:border-[#2C2926]"
-                />
-                <button
-                  type="submit"
-                  className="px-4 py-2 text-xs uppercase tracking-wider bg-[#3B3632] text-white hover:bg-[#24211E] transition-colors font-medium rounded-xs"
-                >
-                  Apply
-                </button>
-              </form>
-              {promoError && <p className="text-[11px] text-[#A96F57]">{promoError}</p>}
-              {promoSuccess && <p className="text-[11px] text-[#5D6B57] font-medium">{promoSuccess}</p>}
+              {promoCode ? (
+                <div className="flex items-center justify-between p-2.5 bg-[#E8EDE6] border border-[#5D6B57]/30 rounded-xs text-xs">
+                  <div className="flex items-center gap-2 text-[#465341]">
+                    <span className="font-semibold uppercase tracking-wider">{promoCode}</span>
+                    <span className="text-[11px]">({discountPercent}% OFF)</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      removePromoCode();
+                      setInputCode('');
+                      setPromoMessage(null);
+                    }}
+                    className="text-[#8B5742] hover:underline text-[11px] font-medium"
+                  >
+                    Hapus
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleApplyPromo} className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Kode promo (cth. REWERA10)"
+                    value={inputCode}
+                    onChange={(e) => setInputCode(e.target.value)}
+                    className="flex-1 text-xs px-3 py-2 bg-[#FAF8F5] border border-[#2C2926]/15 rounded-xs uppercase tracking-wider text-[#24211E] placeholder-[#9C9487] focus:outline-none focus:border-[#2C2926]"
+                  />
+                  <button
+                    type="submit"
+                    className="px-4 py-2 text-xs uppercase tracking-wider bg-[#3B3632] text-white hover:bg-[#24211E] transition-colors font-medium rounded-xs"
+                  >
+                    Terapkan
+                  </button>
+                </form>
+              )}
+              {promoMessage && (
+                <p className={`text-[11px] ${promoMessage.isError ? 'text-[#A96F57]' : 'text-[#5D6B57] font-medium'}`}>
+                  {promoMessage.text}
+                </p>
+              )}
 
               {/* Subtotal Calculation */}
               <div className="space-y-1.5 pt-2 text-xs text-[#666057]">
