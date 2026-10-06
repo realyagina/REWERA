@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight, Instagram, Mail, MapPin, Heart } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { PageView } from '../types';
+import { ReweraLogoMark } from './ReweraLogo';
 
 export const Footer: React.FC<{ onOpenSizeGuide: () => void }> = ({ onOpenSizeGuide }) => {
   const { setCurrentPage, showToast } = useShop();
@@ -29,9 +30,12 @@ export const Footer: React.FC<{ onOpenSizeGuide: () => void }> = ({ onOpenSizeGu
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-14 border-b border-[#36322E]">
           {/* Brand Column (5 cols) */}
           <div className="md:col-span-5 space-y-4">
-            <span className="font-serif text-3xl tracking-[0.25em] font-normal uppercase block text-white">
-              REWERA
-            </span>
+            <div className="flex items-center gap-3">
+              <ReweraLogoMark size={36} />
+              <span className="font-serif text-3xl tracking-[0.25em] font-normal uppercase block text-white">
+                REWERA
+              </span>
+            </div>
             <p className="font-serif italic text-base text-[#D4CCC0] max-w-sm">
               “Fashion deserves a second life.”
             </p>

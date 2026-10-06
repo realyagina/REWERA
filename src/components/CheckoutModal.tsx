@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, CheckCircle2, ShieldCheck, Truck, CreditCard, QrCode, Building2, Package, ArrowRight } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { formatIDR } from '../utils/format';
+import { ReweraLogoMark } from './ReweraLogo';
 
 export const CheckoutModal: React.FC = () => {
   const {
@@ -55,6 +56,7 @@ export const CheckoutModal: React.FC = () => {
         {/* Header */}
         <div className="px-6 py-4 bg-[#F5EFE6] border-b border-[#2C2926]/10 flex items-center justify-between">
           <div className="flex items-center gap-3">
+            <ReweraLogoMark size={22} />
             <span className="font-serif text-lg tracking-widest uppercase font-semibold text-[#24211E]">REWERA</span>
             <span className="text-xs text-[#7A746B]">·</span>
             <span className="text-xs tracking-wider uppercase text-[#7A746B]">

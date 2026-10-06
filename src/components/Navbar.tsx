@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ShoppingBag, Heart, Search, Menu, X, ArrowRight } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { PageView } from '../types';
+import { ReweraLogoMark } from './ReweraLogo';
 
 export const Navbar: React.FC = () => {
   const {
@@ -75,9 +76,12 @@ export const Navbar: React.FC = () => {
 
           <button
             onClick={() => handleNavClick('home')}
-            className="text-2xl sm:text-3xl font-serif tracking-[0.2em] font-normal text-[#24211E] uppercase hover:opacity-85 transition-opacity"
+            className="flex items-center gap-2.5 hover:opacity-85 transition-opacity"
           >
-            REWERA
+            <ReweraLogoMark size={28} />
+            <span className="text-2xl sm:text-3xl font-serif tracking-[0.2em] font-normal text-[#24211E] uppercase">
+              REWERA
+            </span>
           </button>
         </div>
 
