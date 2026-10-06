@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Recycle, Sparkles, Heart, Users, MapPin, Feather } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
+import { IMAGES } from '../assets/images';
 
 export const OurStoryPage: React.FC = () => {
   const { setCurrentPage } = useShop();
@@ -45,7 +46,7 @@ export const OurStoryPage: React.FC = () => {
 
           <div className="md:col-span-6 relative aspect-[4/3] rounded-xs overflow-hidden shadow-sm">
             <img
-              src="/src/assets/images/hero_rewera_editorial_1791265854323.jpg"
+              src={IMAGES.heroEditorial}
               alt="REWERA Founders in Bali"
               className="w-full h-full object-cover"
             />
@@ -99,7 +100,7 @@ export const OurStoryPage: React.FC = () => {
 
           <div className="md:col-span-6 md:order-1 relative aspect-[4/3] rounded-xs overflow-hidden shadow-sm">
             <img
-              src="/src/assets/images/editorial_sustainability_fabrics_1791265896549.jpg"
+              src={IMAGES.fabricsSustainability}
               alt="Reclaimed deadstock fabrics and natural dyes"
               className="w-full h-full object-cover"
             />

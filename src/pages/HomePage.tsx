@@ -3,6 +3,7 @@ import { ArrowRight, Sparkles, Droplets, Recycle, ShieldCheck, Heart, Star } fro
 import { useShop } from '../context/ShopContext';
 import { PRODUCTS, TESTIMONIALS, WHY_REWERA } from '../data/products';
 import { ProductCard } from '../components/ProductCard';
+import { IMAGES } from '../assets/images';
 
 export const HomePage: React.FC = () => {
   const { setCurrentPage, setActiveCategory, navigateToProduct } = useShop();
@@ -17,7 +18,7 @@ export const HomePage: React.FC = () => {
         {/* Background Editorial Image */}
         <div className="absolute inset-0">
           <img
-            src="/src/assets/images/hero_rewera_editorial_1791265854323.jpg"
+            src={IMAGES.heroEditorial}
             alt="REWERA Sustainable Resort Collection in Bali"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover object-[center_35%] scale-100"
@@ -141,7 +142,7 @@ export const HomePage: React.FC = () => {
 
               <div className="relative aspect-[4/3] rounded-xs overflow-hidden shadow-sm">
                 <img
-                  src="/src/assets/images/editorial_sustainability_fabrics_1791265896549.jpg"
+                  src={IMAGES.fabricsSustainability}
                   alt="Artisan studio fabrics and botanical dyes"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover"
@@ -262,7 +263,7 @@ export const HomePage: React.FC = () => {
 
             <div className="lg:col-span-5 h-72 sm:h-96 lg:h-full relative overflow-hidden">
               <img
-                src="/src/assets/images/product_linen_resort_dress_1791265872570.jpg"
+                src={IMAGES.productLinenDress}
                 alt="Aura Linen Resort Dress"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-top"

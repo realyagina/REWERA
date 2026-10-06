@@ -1,4 +1,5 @@
 import { Product } from '../types';
+import { IMAGES } from '../assets/images';
 
 export const PRODUCTS: Product[] = [
   {
@@ -9,7 +10,7 @@ export const PRODUCTS: Product[] = [
     secondaryCategories: ['Resort Wear'],
     price: 589000,
     originalPrice: 650000,
-    image: '/src/assets/images/product_linen_resort_dress_1791265872570.jpg',
+    image: IMAGES.productLinenDress,
     description: 'An ethereal floor-grazing wrap dress designed with an asymmetric draped neckline, adjustable crossover back ties, and a fluid slit. Made to accompany golden hour strolls from Canggu to Seminyak.',
     details: [
       'Asymmetric single-shoulder drape with self-tie closure',
@@ -40,7 +41,7 @@ export const PRODUCTS: Product[] = [
     secondaryCategories: ['Resort Wear'],
     price: 379000,
     originalPrice: 420000,
-    image: '/src/assets/images/product_upcycled_corset_top_1791265883705.jpg',
+    image: IMAGES.productCorsetTop,
     description: 'A structured halter corset that juxtaposes classical tailoring with clean Gen Z minimalism. Features subtle flexible boning and an open lace-up rear designed for versatile day-to-night styling.',
     details: [
       'Sculpted curved hemline that sits seamlessly over high-rise bottoms',
@@ -70,7 +71,7 @@ export const PRODUCTS: Product[] = [
     category: 'Bottoms',
     secondaryCategories: ['Resort Wear'],
     price: 469000,
-    image: '/src/assets/images/hero_rewera_editorial_1791265854323.jpg',
+    image: IMAGES.heroEditorial,
     description: 'Ultra-fluid wide-leg trousers that cascade with every step. Engineered with double forward knife pleats, deep slant pockets, and an elasticated back waistband that combines polish with supreme comfort.',
     details: [
       'Relaxed high-waisted rise with structured flat front waistband',
@@ -98,7 +99,7 @@ export const PRODUCTS: Product[] = [
     slug: 'nusa-asymmetric-linen-vest',
     category: 'Tops',
     price: 349000,
-    image: '/src/assets/images/editorial_sustainability_fabrics_1791265896549.jpg',
+    image: IMAGES.fabricsSustainability,
     description: 'A sculptural tailored vest featuring a diagonal button placket and natural hand-carved coconut shell buttons. Can be styled solo as an evening top or unbuttoned over swimwear.',
     details: [
       'Diagonal front overlap with 4 artisanal coconut shell buttons',
@@ -126,7 +127,7 @@ export const PRODUCTS: Product[] = [
     secondaryCategories: ['Resort Wear'],
     price: 529000,
     originalPrice: 590000,
-    image: '/src/assets/images/product_linen_resort_dress_1791265872570.jpg',
+    image: IMAGES.productLinenDress,
     description: 'An understated bias-cut slip dress infused with serene island grace. Drapes sensually along the silhouette with delicate micro-straps and a gentle cowl neckline.',
     details: [
       'Bias-cut pattern minimizes scrap waste to under 3%',
@@ -153,7 +154,7 @@ export const PRODUCTS: Product[] = [
     slug: 'sari-reconstructed-denim-mini',
     category: 'Bottoms',
     price: 399000,
-    image: '/src/assets/images/product_upcycled_corset_top_1791265883705.jpg',
+    image: IMAGES.productCorsetTop,
     description: 'Every skirt tells a singular story. Assembled from deconstructed pre-loved vintage denim jeans, featuring two-tone contrast paneling and an organic raw hem.',
     details: [
       'Mid-to-high rise waist with vintage metal zipper',
@@ -181,7 +182,7 @@ export const PRODUCTS: Product[] = [
     category: 'Resort Wear',
     secondaryCategories: ['Tops'],
     price: 429000,
-    image: '/src/assets/images/hero_rewera_editorial_1791265854323.jpg',
+    image: IMAGES.heroEditorial,
     description: 'An effortless boxy resort shirt featuring a relaxed camp collar, dropped shoulders, and side hem vents. The ultimate throw-on layer for beach club lounging or morning coffee.',
     details: [
       'Relaxed gender-neutral boxy cut with dropped shoulder seams',
@@ -208,7 +209,7 @@ export const PRODUCTS: Product[] = [
     slug: 'raffia-canvas-upcycled-tote',
     category: 'Accessories',
     price: 289000,
-    image: '/src/assets/images/editorial_sustainability_fabrics_1791265896549.jpg',
+    image: IMAGES.fabricsSustainability,
     description: 'A spacious everyday tote woven from renewable pandanus palm fibers and reinforced with deadstock canvas sailcloth. Accommodates a 15-inch laptop, water bottle, and beach essentials.',
     details: [
       'Hand-woven pandanus body with deadstock heavyweight canvas base',
@@ -234,7 +235,7 @@ export const PRODUCTS: Product[] = [
     category: 'Resort Wear',
     secondaryCategories: ['Bottoms'],
     price: 359000,
-    image: '/src/assets/images/product_linen_resort_dress_1791265872570.jpg',
+    image: IMAGES.productLinenDress,
     description: 'A versatile convertible wrap skirt that transitions effortlessly from poolside cover-up to evening statement piece. Cut with an extended sash tie for endless styling possibilities.',
     details: [
       'Multi-wear design: wear as maxi skirt, halter dress, or beach wrap',
@@ -260,7 +261,7 @@ export const PRODUCTS: Product[] = [
     slug: 'ayu-reversible-silk-scrunchie-bandana-set',
     category: 'Accessories',
     price: 169000,
-    image: '/src/assets/images/editorial_sustainability_fabrics_1791265896549.jpg',
+    image: IMAGES.fabricsSustainability,
     description: 'A charming duo crafted entirely from micro-remnants of bridal atelier mulberry silk. The square bandana can be tied as a hair scarf, neckerchief, or bag accent, paired with a snag-free silk cloud scrunchie.',
     details: [
       '50cm x 50cm hand-rolled edge bandana scarf',

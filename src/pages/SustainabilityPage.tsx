@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Droplets, Recycle, Leaf, Users, RefreshCw, Sparkles, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
+import { IMAGES } from '../assets/images';
 
 export const SustainabilityPage: React.FC = () => {
   const { setCurrentPage } = useShop();
@@ -156,7 +157,7 @@ export const SustainabilityPage: React.FC = () => {
 
           <div className="md:col-span-6 md:order-1 relative aspect-[4/3] rounded-xs overflow-hidden">
             <img
-              src="/src/assets/images/editorial_sustainability_fabrics_1791265896549.jpg"
+              src={IMAGES.fabricsSustainability}
               alt="Pattern cutting and fabric rolls"
               className="w-full h-full object-cover"
             />
