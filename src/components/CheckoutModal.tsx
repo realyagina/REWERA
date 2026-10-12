@@ -332,7 +332,7 @@ export const CheckoutModal: React.FC = () => {
                           <div className="flex items-center gap-2.5 truncate">
                             <div className="w-9 h-11 rounded-xs overflow-hidden shrink-0 border border-black/10">
                               <ProductImageWithColor
-                                src={item.product.image}
+                                src={colorObj?.image || item.product.image}
                                 alt={item.product.name}
                                 colorHex={colorObj?.hex}
                                 className="w-full h-full"
@@ -995,7 +995,7 @@ export const CheckoutModal: React.FC = () => {
                             <div className="flex items-center gap-2 truncate">
                               <div className="w-8 h-10 rounded-xs overflow-hidden shrink-0 border border-black/10">
                                 <ProductImageWithColor
-                                  src={item.product.image}
+                                  src={colorObj?.image || item.product.image}
                                   alt={item.product.name}
                                   colorHex={colorObj?.hex}
                                   className="w-full h-full"

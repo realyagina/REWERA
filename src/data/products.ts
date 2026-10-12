@@ -25,8 +25,8 @@ export const PRODUCTS: Product[] = [
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
       { name: 'Oatmeal Natural', hex: '#E6DFD5', image: IMAGES.productLinenDress },
-      { name: 'Terracotta Clay', hex: '#B87A64', image: IMAGES.productLinenDress },
-      { name: 'Olive Bark', hex: '#636551', image: IMAGES.productLinenDress }
+      { name: 'Terracotta Clay', hex: '#B87A64', image: IMAGES.linenDressTerracotta },
+      { name: 'Olive Bark', hex: '#636551', image: IMAGES.linenDressOlive }
     ],
     isFeatured: true,
     isBestSeller: true,
@@ -56,8 +56,8 @@ export const PRODUCTS: Product[] = [
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
       { name: 'Sage Green', hex: '#7A8C74', image: IMAGES.productCorsetTop },
-      { name: 'Sand Khaki', hex: '#D1C7B7', image: IMAGES.productCorsetTop },
-      { name: 'Charcoal Noir', hex: '#2B2927', image: IMAGES.productCorsetTop }
+      { name: 'Sand Khaki', hex: '#D1C7B7', image: IMAGES.corsetTopSand },
+      { name: 'Charcoal Noir', hex: '#2B2927', image: IMAGES.corsetTopCharcoal }
     ],
     isFeatured: true,
     isBestSeller: true,
@@ -86,8 +86,8 @@ export const PRODUCTS: Product[] = [
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
       { name: 'Raw Cream', hex: '#F0ECE4', image: IMAGES.heroEditorial },
-      { name: 'Warm Taupe', hex: '#A89F91', image: IMAGES.heroEditorial },
-      { name: 'Mocha Earth', hex: '#5E4C41', image: IMAGES.heroEditorial }
+      { name: 'Warm Taupe', hex: '#A89F91', image: IMAGES.palazzoPantsTaupe },
+      { name: 'Mocha Earth', hex: '#5E4C41', image: IMAGES.palazzoPantsMocha }
     ],
     isFeatured: true,
     isBestSeller: true,
@@ -114,7 +114,7 @@ export const PRODUCTS: Product[] = [
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
       { name: 'Sand Dune', hex: '#DFD8CC', image: IMAGES.fabricsSustainability },
-      { name: 'Muted Moss', hex: '#6D7563', image: IMAGES.fabricsSustainability }
+      { name: 'Muted Moss', hex: '#6D7563', image: IMAGES.resortShirtMoss }
     ],
     isBestSeller: true,
     careInstructions: 'Gentle hand wash. Lay flat to dry away from direct scorching sun.'
@@ -127,7 +127,7 @@ export const PRODUCTS: Product[] = [
     secondaryCategories: ['Resort Wear'],
     price: 529000,
     originalPrice: 590000,
-    image: IMAGES.productLinenDress,
+    image: IMAGES.slipDressClay,
     description: 'An understated bias-cut slip dress infused with serene island grace. Drapes sensually along the silhouette with delicate micro-straps and a gentle cowl neckline.',
     details: [
       'Bias-cut pattern minimizes scrap waste to under 3%',
@@ -141,8 +141,8 @@ export const PRODUCTS: Product[] = [
     wasteDivertedKg: 0.52,
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
-      { name: 'Earthy Clay', hex: '#A86A55', image: IMAGES.productLinenDress },
-      { name: 'Pale Sage', hex: '#8F9B88', image: IMAGES.productLinenDress },
+      { name: 'Earthy Clay', hex: '#A86A55', image: IMAGES.slipDressClay },
+      { name: 'Pale Sage', hex: '#8F9B88', image: IMAGES.slipDressSage },
       { name: 'Cream Silk', hex: '#EDE8E1', image: IMAGES.productLinenDress }
     ],
     isFeatured: true,
@@ -154,7 +154,7 @@ export const PRODUCTS: Product[] = [
     slug: 'sari-reconstructed-denim-mini',
     category: 'Bottoms',
     price: 399000,
-    image: IMAGES.productCorsetTop,
+    image: IMAGES.denimMiniIndigo,
     description: 'Every skirt tells a singular story. Assembled from deconstructed pre-loved vintage denim jeans, featuring two-tone contrast paneling and an organic raw hem.',
     details: [
       'Mid-to-high rise waist with vintage metal zipper',
@@ -168,8 +168,8 @@ export const PRODUCTS: Product[] = [
     wasteDivertedKg: 0.85,
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
-      { name: 'Contrast Dual Indigo', hex: '#586E82', image: IMAGES.productCorsetTop },
-      { name: 'Bleached Sand Denim', hex: '#B5C0C9', image: IMAGES.productCorsetTop }
+      { name: 'Contrast Dual Indigo', hex: '#586E82', image: IMAGES.denimMiniIndigo },
+      { name: 'Bleached Sand Denim', hex: '#B5C0C9', image: IMAGES.denimMiniBleached }
     ],
     isBestSeller: false,
     isNew: true,
@@ -182,7 +182,7 @@ export const PRODUCTS: Product[] = [
     category: 'Resort Wear',
     secondaryCategories: ['Tops'],
     price: 429000,
-    image: IMAGES.heroEditorial,
+    image: IMAGES.resortShirtBone,
     description: 'An effortless boxy resort shirt featuring a relaxed camp collar, dropped shoulders, and side hem vents. The ultimate throw-on layer for beach club lounging or morning coffee.',
     details: [
       'Relaxed gender-neutral boxy cut with dropped shoulder seams',
@@ -196,9 +196,9 @@ export const PRODUCTS: Product[] = [
     wasteDivertedKg: 0.44,
     sizes: ['S', 'M', 'L', 'XL'],
     colors: [
-      { name: 'Warm Bone', hex: '#ECE7DF', image: IMAGES.heroEditorial },
+      { name: 'Warm Bone', hex: '#ECE7DF', image: IMAGES.resortShirtBone },
       { name: 'Toasted Almond', hex: '#B8A896', image: IMAGES.heroEditorial },
-      { name: 'Forest Moss', hex: '#4B5543', image: IMAGES.heroEditorial }
+      { name: 'Forest Moss', hex: '#4B5543', image: IMAGES.resortShirtMoss }
     ],
     isFeatured: true,
     careInstructions: 'Machine wash cold on gentle cycle. Hang dry in shade.'
@@ -235,7 +235,7 @@ export const PRODUCTS: Product[] = [
     category: 'Resort Wear',
     secondaryCategories: ['Bottoms'],
     price: 359000,
-    image: IMAGES.productLinenDress,
+    image: IMAGES.linenDressOlive,
     description: 'A versatile convertible wrap skirt that transitions effortlessly from poolside cover-up to evening statement piece. Cut with an extended sash tie for endless styling possibilities.',
     details: [
       'Multi-wear design: wear as maxi skirt, halter dress, or beach wrap',
@@ -249,9 +249,9 @@ export const PRODUCTS: Product[] = [
     wasteDivertedKg: 0.35,
     sizes: ['Free Size'],
     colors: [
-      { name: 'Sunken Olive', hex: '#58614E', image: IMAGES.productLinenDress },
+      { name: 'Sunken Olive', hex: '#58614E', image: IMAGES.linenDressOlive },
       { name: 'Pale Shell', hex: '#EDE8E1', image: IMAGES.productLinenDress },
-      { name: 'Warm Terracotta', hex: '#A86A55', image: IMAGES.productLinenDress }
+      { name: 'Warm Terracotta', hex: '#A86A55', image: IMAGES.linenDressTerracotta }
     ],
     careInstructions: 'Hand wash cold. Twist and knot lightly while drying for enhanced crinkle effect.'
   },

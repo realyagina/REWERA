@@ -75,7 +75,7 @@ export const QuickViewModal: React.FC = () => {
           {/* Dynamic Tinted Image */}
           <div className="relative aspect-[3/4] bg-[#ECE5D8] overflow-hidden">
             <ProductImageWithColor
-              src={quickViewProduct.image}
+              src={activeColorObj?.image || quickViewProduct.image}
               alt={`${quickViewProduct.name} - ${currentColor}`}
               colorHex={activeColorObj?.hex}
               colorName={currentColor}

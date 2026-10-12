@@ -54,7 +54,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="relative aspect-[3/4] w-full bg-[#F3EFE9] overflow-hidden rounded-sm transition-transform duration-500 ease-out">
         {!imageError ? (
           <ProductImageWithColor
-            src={product.image}
+            src={activeColorObj?.image || product.image}
             alt={`${product.name} - ${selectedColor}`}
             colorHex={activeColorObj?.hex}
             colorName={selectedColor}

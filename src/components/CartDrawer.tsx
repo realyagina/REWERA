@@ -123,7 +123,7 @@ export const CartDrawer: React.FC = () => {
                       }}
                     >
                       <ProductImageWithColor
-                        src={item.product.image}
+                        src={itemColorObj?.image || item.product.image}
                         alt={item.product.name}
                         colorHex={itemColorObj?.hex}
                         className="w-full h-full"
